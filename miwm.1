@@ -1,0 +1,246 @@
+.TH miwm 1 miwm
+.SH NAME
+miwm \- minimal and dynamic tiling window manager
+.SH SYNOPSIS
+.B miwm
+.RB [ \-v ]
+.SH DESCRIPTION
+.I miwm
+is a minimal, lightweight, tiny but monstrous, dynamic tiling window manager.
+.P
+.SH MODES
+.I miwm
+comes with two tiling layouts by default plus the floating mode.
+It allows the usual method of tiling window managers, with the new window as
+the master window, but also provides the ability to have the new window opened
+as the last window (at the bottom) of the stack.
+.P
+the available modes:
+.TP
+.B Tile stack
+the stack clients are tiled on the side of master.
+.TP
+.B Monocle mode
+also known as fullscreen or max mode, where the clients take up the entire
+screen space. Other clients are hidden behind the current shown window.
+On this layout, fullscreen clients don't need and don't have borders.
+You can change that behavior with the
+.I monocleborders
+patch, in the corresponding branch.
+.TP
+.B Floating mode
+windows can move and be resized freely in the screen space, like on a stacking
+window manager. Windows retain their floating status until the user switches
+to a tiling mode.
+.SH OPTIONS
+.TP
+.B \-v
+prints version information to standard output, then exits.
+.SH USAGE
+.SS Status bar
+.P
+.I miwm
+provides a built-in status bar. It displays the current workspace and layout on
+the left, and the output of user-configured shell commands on the right.
+Commands are run once per second through /bin/sh and should print a short line
+to standard output. Edit the STATUS_COMMANDS array in config.h to add, remove,
+or change commands. For example:
+.nf
+    "bash $HOME/.config/miwm/status/clock.sh",
+    "bash $HOME/.config/miwm/status/battery.sh",
+    NULL
+.fi
+Each script should print the value to display and exit promptly. The default bar
+includes a clock and basic CPU and memory summaries.
+.P
+The available settings in
+.I config.h
+for the bar are:
+.TP
+.B SHOW_PANEL
+whether the bar should be visible or hidden by default
+.TP
+.B TOP_PANEL
+whether the bar should be on top or bottom of the screen
+.TP
+.B PANEL_HEIGHT
+the bar height and the space reserved for it. Set to
+.B 0
+to disable the bar completely.
+.TP
+.B BAR_BACKGROUND
+background color of the bar
+.TP
+.B BAR_FOREGROUND
+text color of the bar
+.SS Keyboard and mouse commands
+All of
+.I miwm's
+commands can be customized by editing
+.I config.h
+and recompiling.
+.P
+The default keyboard-bindings include:
+.TP
+.B Mod1\-b
+Toggles the panel on and off.
+.TP
+.B Mod1\-Backspace
+Focus the window with an urgent hint.
+Focus the appropriate desktop if needed.
+.TP
+.B Mod1\-Shift\-c
+Close focused window.
+.TP
+.B Mod1\-j
+Focus next window.
+.TP
+.B Mod1\-k
+Focus previous window.
+.TP
+.B Mod1\-l
+Increase master area size.
+.TP
+.B Mod1\-h
+Decrease master area size.
+.TP
+.B Mod1\-o
+Shrink the size of the first stack window.
+.TP
+.B Mod1\-p
+Grow the size of the first stack window.
+.TP
+.B Mod1\-Return
+Swaps the focused window to/from master area (tiled layouts only).
+.TP
+.B Mod1\-Shift\-j
+Move the focussed window down the stack
+.TP
+.B Mod1\-Shift\-k
+Move the focussed window up the stack
+.TP
+.B Mod1\-Shift\-t
+Sets tiled layout.
+.TP
+.B Mod1\-Shift\-m
+Sets monocle layout.
+.TP
+.B Mod1\-Shift\-f
+Sets float layout
+.TP
+.B Mod1\-Shift\-r
+Quit with exit value 0 (usefull for restarts of the wm).
+.TP
+.B Mod1\-Shift\-q
+Quit with exit value 1 (differentiate quit from restart).
+.TP
+.B Mod1\-Shift\-Return
+Start
+.BR xterm (1).
+.TP
+.B Mod4\-v
+Start
+.BR dmenu (1).
+.TP
+.B MOD4\-{Down,Up,Right,Left} Arrow
+move the current window to the corresponding direction.
+.TP
+.B MOD4\-Shift\-{Down,Up,Right,Left} Arrow
+resize the current window to the corresponding direction.
+.TP
+.B Mod1\-F{1..n}
+Move to the nth workspace. By default,
+.I miwm
+is configured with four workspaces.
+The setting in
+.I config.h
+.B FOLLOW_WINDOW
+defines whether the focus should change on
+the new desktop, where the window moved to.
+.TP
+.B Mod1\-Shift\-F{1..n}
+Move focused window to nth workspace.
+.P
+The default mouse-bindings include:
+.TP
+.B Mod1\-Button1
+Dragging the mouse will move the selected window
+.TP
+.B Mod1\-Button3
+Dragging the mouse will resize the selected window
+.TP
+.B Mod4\-Button3
+will bring up
+.I dmenu
+.SS Customization
+.I miwm
+is customized by copying
+.I config.def.h
+to
+.I config.h
+and (re)compiling the source code.
+.P
+settings among others covered above include:
+.TP
+.B MASTER_SIZE
+set the size of the master area that
+will be used by the master window
+.TP
+.B DEFAULT_MODE
+set the default tiling mode to be active on startup
+.TP
+.B ATTACH_ASIDE
+whether new stack clients should spawn as the master window,
+or the last stack window
+.TP
+.B FOLLOW_MOUSE
+whether to focus the window the mouse just entered
+.TP
+.B FOLLOW_WINDOW
+whether to follow the window to the new desktop where it moved
+.TP
+.B CLICK_TO_FOCUS
+whether an action on a window (eg clicking, or scrolling)
+will give the window focus. Disabling this gives the user
+the ability to, for example, look up things on a web browser
+but not lose focus from the terminal etc.
+.TP
+.B BORDER_WIDTH
+the width of the borders the windows have
+.TP
+.B FOCUS / UNFOCUS
+the colors for the borders of focused and unfocused windows
+.TP
+.B DESKTOPS
+the number of desktops to use
+.TP
+.B DEFAULT_DESKTOP
+which desktop to focus by default
+.TP
+.B MINWSZ
+the minimum window size allowed. Prevents over resizing with
+the mouse or keyboard (eg resizing the master area)
+.P
+users can set
+.B rules
+on applications, by matching their
+.B class
+or
+.B instance
+name. The rules can specify on which
+.B desktop
+the application should start (or
+.B -1
+to signify the current desktop), whether the
+.B focus
+should change to that desktop, when the application starts
+and whether the application should start on
+.B floating
+or tiled mode.
+.SH SEE ALSO
+.BR dmenu (1)
+.SH BUGS
+.I miwm
+is under active development. Please report all bugs to the author.
+.SH AUTHOR
+Ivan c00kiemon5ter Kanakarakis <ivan.kanak at gmail.com>
