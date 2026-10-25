@@ -62,8 +62,8 @@ static const char *termcmd[] = { "alacritty", NULL };
 static const char *menucmd[] = { "rofi -show -drun", NULL };
 
 #define DESKTOPCHANGE(K,N) \
-    {  MOD1,             K,              change_desktop, {.i = N}}, \
-    {  MOD1|ShiftMask,   K,              client_to_desktop, {.i = N}},
+    {  MOD4,             K,              change_desktop, {.i = N}}, \
+    {  MOD4|ShiftMask,   K,              client_to_desktop, {.i = N}},
 
 /**
  * keyboard shortcuts
@@ -97,10 +97,10 @@ static Key keys[] = {
     {  MOD4|SHIFT,       XK_k,          moveresize,        {.v = (int []){   0,   0,   0, -25 }}}, /* height shrink */
     {  MOD4|SHIFT,       XK_l,          moveresize,        {.v = (int []){   0,   0,  25,   0 }}}, /* width grow    */
     {  MOD4|SHIFT,       XK_h,          moveresize,        {.v = (int []){   0,   0, -25,   0 }}}, /* width shrink  */
-       DESKTOPCHANGE(    XK_F1,                             0)
-       DESKTOPCHANGE(    XK_F2,                             1)
-       DESKTOPCHANGE(    XK_F3,                             2)
-       DESKTOPCHANGE(    XK_F4,                             3)
+       DESKTOPCHANGE(    XK_1,                             0)
+       DESKTOPCHANGE(    XK_2,                             1)
+       DESKTOPCHANGE(    XK_3,                             2)
+       DESKTOPCHANGE(    XK_4,                             3)
 };
 
 /**
