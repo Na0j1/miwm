@@ -36,10 +36,7 @@
  * Example: "bash $HOME/.config/miwm/status/clock.sh"
  */
 static const char *statuscmds[] = {
-//    "date '+%a %d %b %H:%M'",
-//    "printf 'CPU '; top -bn1 2>/dev/null | awk '/Cpu\\(s\\)/ {print $2 \"%\"; exit}'",
-//    "printf 'RAM '; free -h 2>/dev/null | awk '/Mem:/ {print $3 \"/\" $2; exit}'",
-    "date '+(%a) %d %m %Y - %H:%M'"
+    "date '+(%a) %d %m %Y - %H:%M'",
     NULL
 };
 #define STATUS_COMMANDS statuscmds
